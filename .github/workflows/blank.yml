@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: Build Android APK
 
 # Controls when the workflow will run
 on:
@@ -23,7 +23,32 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup JDK
+        uses: actions/setup-java@v3
+        with:
+         distribution: 'zulu'
+         java-version: '11'
+
+      # Install Android SDK tools
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v2
+        with:
+         api-level: 30
+         build-tools: 30.0.3
+
+      # Create the project (APK compilation)
+      - name: Build APK
+        run: ./gradlew assembleRelease
+
+      # Install APK as Artifact
+      - name: Upload APK
+        uses: actions/upload-artifact@v3
+        with:
+         name: app-release.apk
+         path: app/build/outputs/apk/release/app-release.apk
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
