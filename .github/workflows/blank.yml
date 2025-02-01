@@ -39,6 +39,12 @@ jobs:
          api-level: 30
          build-tools: 30.0.3
 
+      - name: Debug Build Process
+        run: |
+          echo "Checking if Gradle ran successfully..."
+          ls -R app/build || true
+
+
       - name: Debug APK Path
         run: |
          echo "Checking APK output directory..."
@@ -46,7 +52,12 @@ jobs:
 
       # Create the project (APK compilation)
       - name: Build APK
-        run: ./gradlew clean assembleRelease --stacktrace
+        run: ./gradlew clean assembleRelease
+
+      - name: List Build Outputs
+        run: |
+         echo "Listing app/build directory..."
+         ls -R app/build
 
       # Install APK as Artifact
       - name: Upload APK
