@@ -45,11 +45,6 @@ jobs:
           ls -R app/build || true
 
 
-      - name: Debug APK Path
-        run: |
-         echo "Checking APK output directory..."
-         ls -R app/build/outputs/apk/
-
       # Create the project (APK compilation)
       - name: Build APK
         run: ./gradlew clean assembleRelease
