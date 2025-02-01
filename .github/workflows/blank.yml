@@ -54,10 +54,6 @@ jobs:
       - name: Build APK
         run: ./gradlew clean assembleRelease
 
-      - name: List Build Outputs
-        run: |
-         echo "Listing app/build directory..."
-         ls -R app/build
 
       # Install APK as Artifact
       - name: Upload APK
