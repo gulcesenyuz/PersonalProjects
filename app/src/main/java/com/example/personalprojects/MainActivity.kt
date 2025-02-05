@@ -23,7 +23,7 @@ class MainActivity : ComponentActivity() {
             PersonalProjectsTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {
                     val viewModel = viewModel<MovieViewModel>()
-                    val state = viewModel.state
+                    //val state = viewModel.state
                     NavigationComposable()
                 }
             }

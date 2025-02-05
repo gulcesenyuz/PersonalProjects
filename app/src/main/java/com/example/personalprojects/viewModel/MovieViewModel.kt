@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 class MovieViewModel : ViewModel() {
     private val movieRepository = MovieRepository()
     var state by mutableStateOf(MovieScreenState())
-    var movieId by mutableIntStateOf(0)
+    //var movieId by mutableIntStateOf(0)
 
     private val pagination = PaginationFactory(
         initialPage = state.page,
