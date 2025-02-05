@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.personalprojects.navigation.NavigationComposable
 import com.example.personalprojects.ui.theme.PersonalProjectsTheme
 import com.example.personalprojects.viewModel.MovieViewModel
 
@@ -23,7 +24,7 @@ class MainActivity : ComponentActivity() {
                 Surface(modifier = Modifier.fillMaxSize()) {
                     val viewModel = viewModel<MovieViewModel>()
                     val state = viewModel.state
-                    Text(text = state.movies.toString())
+                    NavigationComposable()
                 }
             }
 
