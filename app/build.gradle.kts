@@ -22,12 +22,16 @@ android {
     }
 
     buildTypes {
+        debug {
+            isDebuggable = true
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
     compileOptions {
@@ -69,4 +73,18 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.analytics)
+
+    // retrofit
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
+
+    //coil
+    implementation (libs.coil.compose)
+    implementation (libs.accompanist.coil)
+
+    // viewModel
+    implementation (libs.androidx.lifecycle.viewmodel.compose)
+
+    //navigation
+    implementation(libs.androidx.navigation.compose)
 }

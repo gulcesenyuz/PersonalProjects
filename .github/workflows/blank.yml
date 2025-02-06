@@ -30,7 +30,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
          distribution: 'zulu'
-         java-version: '11'
+         java-version: '17'
 
       # Install Android SDK tools
       - name: Setup Android SDK
@@ -39,16 +39,23 @@ jobs:
          api-level: 30
          build-tools: 30.0.3
 
+      - name: Debug Build Process
+        run: |
+          echo "Checking if Gradle ran successfully..."
+          ls -R app/build || true
+
+
       # Create the project (APK compilation)
       - name: Build APK
-        run: ./gradlew assembleRelease
+        run: ./gradlew clean assembleRelease
+
 
       # Install APK as Artifact
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-         name: app-release.apk
-         path: app/build/outputs/apk/release/app-release.apk
+          name: app-release.apk
+          path: app/build/outputs/apk/release/app-release.apk
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
