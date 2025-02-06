@@ -29,7 +29,7 @@ fun NavigationComposable() {
                 }
             )
         ) {id->
-            id.arguments?.getInt("id")?.let { movieId->
+            id.arguments?.getInt("movieId")?.let { movieId->
                 MovieDetailScreen(id =movieId)
             }
 

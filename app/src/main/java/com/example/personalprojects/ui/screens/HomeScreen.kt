@@ -31,7 +31,8 @@ fun HomeScreen(navController: NavHostController) {
         modifier = Modifier.background(Color.Transparent),
         topBar = {
             TopBar()
-        }, content = { paddingValues ->
+        },
+        content = { paddingValues ->
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
                 Modifier

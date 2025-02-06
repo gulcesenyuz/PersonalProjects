@@ -13,7 +13,7 @@ fun TopBar() {
     TopAppBar(
         title = { Text(text = "MOVIESAPP") },
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = Color.White.copy(.4f)
+            containerColor = Color.Black.copy(.4f)
         )
     )
 }

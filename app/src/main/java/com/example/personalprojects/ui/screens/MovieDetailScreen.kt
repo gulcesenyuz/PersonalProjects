@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -20,6 +19,7 @@ import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -30,15 +30,14 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
-import com.example.personalprojects.R
 import com.example.personalprojects.models.MovieDetailsModel
+import com.example.personalprojects.ui.common.TopBar
 import com.example.personalprojects.viewModel.MovieViewModel
 
 @Composable
@@ -50,36 +49,43 @@ fun MovieDetailScreen(id: Int) {
 
     val details = state.detailsData
 
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.TopCenter
-    ) {
-        BackGroundPoster(details = details)
-        ForegroundPoster(details = details)
-        Column(
-            Modifier
-                .padding(start = 20.dp, end = 20.dp, bottom = 50.dp)
-                .align(Alignment.BottomCenter),
-            verticalArrangement = Arrangement.spacedBy(20.dp)
-        ) {
-            Text(
-                text = details.title,
-                modifier = Modifier.fillMaxWidth(),
-                fontSize = 38.sp,
-                color = Color.White,
-                lineHeight = 40.sp,
-                textAlign = TextAlign.Center
-            )
-            Rating(details = details, modifier = Modifier)
-            TextBuilder(icon = Icons.Filled.Info, title = "Summery:", bodyText = details.plot)
-            TextBuilder(icon = Icons.Filled.Person, title = "Actors:", bodyText = details.actors)
-            ImageRow(details = details)
+    Scaffold (
+        modifier = Modifier.background(Color.Transparent),
+        topBar = {
+            TopBar()
+        },
+        content = { paddingValues ->
+            Box(
+                modifier = Modifier.fillMaxSize().padding(paddingValues),
+                contentAlignment = Alignment.TopCenter
+            ) {
+                BackGroundPoster(details = details)
+                Column(
+                    Modifier
+                        .padding(start = 20.dp, end = 20.dp, bottom = 60.dp)
+                        .align(Alignment.BottomCenter),
+                    verticalArrangement = Arrangement.spacedBy(10.dp)
+                ) {
+                    Text(
+                        text = details.title,
+                        modifier = Modifier.fillMaxWidth(),
+                        fontSize = 26.sp,
+                        color = Color.White,
+                        lineHeight = 40.sp,
+                        textAlign = TextAlign.Center
+                    )
+                    Rating(details = details, modifier = Modifier)
+                    ContentTextContainer(icon = Icons.Filled.Info, title = "Summary:", bodyText = details.plot)
+                    ContentTextContainer(icon = Icons.Filled.Person, title = "Cast:", bodyText = details.actors)
+                    ImageRowList(details = details)
+                }
+            }
         }
-    }
+        )
 }
 
 @Composable
-fun ImageRow(details: MovieDetailsModel) {
+fun ImageRowList(details: MovieDetailsModel) {
     if (details.images.isNotEmpty()) {
         LazyRow {
             items(details.images.size) {
@@ -97,7 +103,7 @@ fun ImageRow(details: MovieDetailsModel) {
 }
 
 @Composable
-fun TextBuilder(icon: ImageVector, title: String, bodyText: String) {
+fun ContentTextContainer(icon: ImageVector, title: String, bodyText: String) {
     Row {
         Icon(
             imageVector = icon,
@@ -125,11 +131,6 @@ fun Rating(details: MovieDetailsModel, modifier: Modifier) {
             color = Color.White
         )
         Spacer(modifier = modifier.width(25.dp))
-        Icon(
-            painter = painterResource(id = R.drawable.ic_launcher_foreground),
-            contentDescription = "",
-            tint = Color.White
-        )
         Text(
             text = details.runtime,
             modifier.padding(start = 6.dp),
@@ -146,40 +147,6 @@ fun Rating(details: MovieDetailsModel, modifier: Modifier) {
 }
 
 @Composable
-fun ForegroundPoster(details: MovieDetailsModel) {
-
-    Box(
-        modifier = Modifier
-            .wrapContentHeight()
-            .width(250.dp)
-            .padding(top = 80.dp)
-            .clip(RoundedCornerShape(16.dp)),
-        contentAlignment = Alignment.TopCenter
-    ) {
-        AsyncImage(
-            model = details.poster, contentDescription = details.title,
-            Modifier
-                .width(250.dp)
-                .clip(RoundedCornerShape(16.dp))
-        )
-        Box(
-            modifier = Modifier
-                .matchParentSize()
-                .width(250.dp)
-                .background(
-                    brush = Brush.verticalGradient(
-                        listOf(
-                            Color.Transparent,
-                            Color.Transparent,
-                            Color(0xB91A1B1B),
-                        )
-                    ), shape = RoundedCornerShape(16.dp)
-                )
-        )
-    }
-}
-
-@Composable
 fun BackGroundPoster(details: MovieDetailsModel) {
     Box(
         modifier = Modifier
@@ -189,8 +156,8 @@ fun BackGroundPoster(details: MovieDetailsModel) {
         AsyncImage(
             model = details.poster, contentDescription = details.title,
             modifier = Modifier
-                .fillMaxWidth()
-                .alpha(0.6f)
+                .matchParentSize()
+                .alpha(0.8f)
         )
         Box(
             modifier = Modifier
@@ -202,7 +169,6 @@ fun BackGroundPoster(details: MovieDetailsModel) {
                             Color.DarkGray
                         )
                     ),
-                    shape = RoundedCornerShape(16.dp)
                 )
         )
     }

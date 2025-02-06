@@ -78,20 +78,6 @@ fun MovieCardItem(itemIndex: Int, movieList: List<MovieModel>, navController: Na
                         )
                     )
                 )
-                Spacer(modifier = Modifier.height(8.dp))
-                Row(Modifier.align(Alignment.End)) {
-                    Icon(imageVector = Icons.Rounded.Star, contentDescription = "")
-                    Text(
-                        text = movieList[itemIndex].imdbRating,
-                        textAlign = TextAlign.Start,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 8.dp),
-                        fontWeight = FontWeight.Bold,
-                        color = Color.Black,
-                        maxLines = 2
-                    )
-                }
             }
         }
     }
